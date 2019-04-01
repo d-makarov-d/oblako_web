@@ -1,0 +1,10 @@
+<h1>Задачи</h1>
+
+<% @projects.each do |project| %>
+    <h3> <%=project.title.upcase %> </h3>
+    <ul>
+    <% project.todos.each do |todo| %>
+        <li> <%= todo.text %> </li>
+    <% end %>
+    </ul>
+<% end %>
