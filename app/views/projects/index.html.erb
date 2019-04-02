@@ -1,4 +1,4 @@
-<h1>Задачи</h1>
+<h1> Задачи <br> <br> </h1>
 
 <% @projects.each do |project| %>
     <h3> <%=project.title.upcase %> </h3>
@@ -8,3 +8,25 @@
     <% end %>
     </ul>
 <% end %>
+
+<button type="button" name="new_btn">Новая задача</button>
+
+<div id: = "mdiv">
+<h3> НОВАЯ ЗАДАЧА </h3>
+<%= form_with model: @todo, url: projects_path, local: true, class: "nifty_form", id: "form_id" do |f| %>
+<p>
+    <br>
+    <%= f.text_field(:text) %>
+</p>
+<%= f.select(:project_id) do %>
+    <% @projects.each do |proj| %>
+        <%= content_tag(:option, proj.title, value: proj.id) %>
+    <% end %>
+<% end %>
+<p>
+    <%= f.submit() %>
+    <%= link_to "Отмена", root_url, id: "cancell_link"%>
+    <%= link_to "Ok", root_url ,id: "submit_link" %>
+</p>
+<% end %>
+</div>
