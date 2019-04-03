@@ -9,13 +9,14 @@
     </ul>
 <% end %>
 
-<button type="button" name="new_btn">Новая задача</button>
+<%= form_with id: "new_btn" do |f| %>
+  <%= f.submit("Новая задача")%>
+<% end %>
 
-<div id: = "mdiv">
-<h3> НОВАЯ ЗАДАЧА </h3>
 <%= form_with model: @todo, url: projects_path, local: true, class: "nifty_form", id: "form_id" do |f| %>
 <p>
     <br>
+    <h3> НОВАЯ ЗАДАЧА </h3>
     <%= f.text_field(:text) %>
 </p>
 <%= f.select(:project_id) do %>
@@ -24,9 +25,7 @@
     <% end %>
 <% end %>
 <p>
-    <%= f.submit() %>
     <%= link_to "Отмена", root_url, id: "cancell_link"%>
     <%= link_to "Ok", root_url ,id: "submit_link" %>
 </p>
 <% end %>
-</div>
