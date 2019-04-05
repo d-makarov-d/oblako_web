@@ -1,31 +1,51 @@
-<h1> Задачи <br> <br> </h1>
-
-<% @projects.each do |project| %>
-    <h3> <%=project.title.upcase %> </h3>
-    <ul>
-    <% project.todos.each do |todo| %>
-        <li> <%= todo.text %> </li>
+<div class="header">
+    <h1> Задачи <%= link_to "+", root_url ,id: "new_btn" %> </h1>
+</div>
+<div class ="tab">
+    <% @projects.each do |project| %>
+        <div class = "col-lg-4 col-md-6">
+            <div class = "proj">
+                <h3> <%=project.title.upcase %> </h3>
+                <hr>
+                <ul type = "none">
+                <% project.todos.each do |todo| %>
+                    <li id=<%= todo.id %>>
+                        <%= form_with model: @todo, url: '/projects/' + project.id.to_s, id: "todo" + todo.id.to_s, :method => :PATCH, local: true do |f|%>
+                            <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" li_id=<%= todo.id %> >
+                                <% if todo.isCompleted then %>
+                                    <a class = "strike"> <%= todo.text %> </a>
+                                <% else %>
+                                    <a class = "normal"> <%= todo.text %> </a>
+                                <% end %>
+                            </input>
+                            <%= f.hidden_field(:todo_id, {:value => todo.id})%>
+                        <% end %>
+                    </li>
+                <% end %>
+                </ul>
+            </div>
+        </div>
     <% end %>
-    </ul>
-<% end %>
+</div>
 
-<%= form_with id: "new_btn" do |f| %>
-  <%= f.submit("Новая задача")%>
-<% end %>
+<div class = "glob">
+    <div class = "new_t">
+        <%= form_with model: @todo, url: projects_path, local: true, class: "nifty_form center", id: "form_id" do |f| %>
+            <p>
+                <br>
+                <h3> НОВАЯ ЗАДАЧА </h3>
+                <%= f.text_field(:text, {:class => 'form-control'}) %>
 
-<%= form_with model: @todo, url: projects_path, local: true, class: "nifty_form", id: "form_id" do |f| %>
-<p>
-    <br>
-    <h3> НОВАЯ ЗАДАЧА </h3>
-    <%= f.text_field(:text) %>
-</p>
-<%= f.select(:project_id) do %>
-    <% @projects.each do |proj| %>
-        <%= content_tag(:option, proj.title, value: proj.id) %>
-    <% end %>
-<% end %>
-<p>
-    <%= link_to "Отмена", root_url, id: "cancell_link"%>
-    <%= link_to "Ok", root_url ,id: "submit_link" %>
-</p>
-<% end %>
+                <%= f.select(:project_id) do %>
+                    <% @projects.each do |proj| %>
+                        <%= content_tag(:option, proj.title, value: proj.id) %>
+                    <% end %>
+                <% end %>
+            </p>
+
+            <%= link_to "Отмена", root_url, {:id => "cancell_link", :class => 'btn btn-default'}%>
+            <%= link_to "Ok", root_url , {:id => "submit_link",  :class => 'btn btn-primary'}%>
+
+        <% end %>
+    </div>
+</div>
