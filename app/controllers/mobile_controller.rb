@@ -1,6 +1,8 @@
 class MobileController < ApplicationController
     def index
-        render :json => {'Projects': Project.all.to_json(:include => :todos) }
+        s = {'Projects': Project.all.to_json(:include => :todos) }.to_json()
+        render :json => Project.all.to_json(:include => :todos)
+        #render :json => {'Projects': Project.all, 'Todos': Todo.all}
     end
     def update
         @todo = Todo.find(iscompleted_params['todo_id'].to_i)
