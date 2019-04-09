@@ -1,4 +1,5 @@
 class MobileController < ApplicationController
+    protect_from_forgery with: :null_session
     def index
         s = {'Projects': Project.all.to_json(:include => :todos) }.to_json()
         render :json => Project.all.to_json(:include => :todos)
