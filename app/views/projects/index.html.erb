@@ -11,13 +11,15 @@
                 <% project.todos.each do |todo| %>
                     <li id=<%= todo.id %>>
                         <%= form_with model: @todo, url: '/projects/' + project.id.to_s, id: "todo" + todo.id.to_s, :method => :PATCH, local: true do |f|%>
-                            <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" li_id=<%= todo.id %> >
-                                <% if todo.isCompleted then %>
+                            <% if todo.isCompleted then %>
+                                <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" checked li_id=<%= todo.id %> >
                                     <a class = "strike"> <%= todo.text %> </a>
-                                <% else %>
+                                </input>
+                            <% else %>
+                                <input type="checkbox" class='icheck-me' data-skin="square" data-color="blue" li_id=<%= todo.id %> >
                                     <a class = "normal"> <%= todo.text %> </a>
-                                <% end %>
-                            </input>
+                                </input>
+                            <% end %>
                             <%= f.hidden_field(:todo_id, {:value => todo.id})%>
                         <% end %>
                     </li>

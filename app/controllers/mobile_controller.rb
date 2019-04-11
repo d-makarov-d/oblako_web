@@ -7,11 +7,7 @@ class MobileController < ApplicationController
     end
     def update
         @todo = Todo.find(iscompleted_params['todo_id'].to_i)
-        if @todo.isCompleted then
-            @todo.isCompleted = false
-        else
-            @todo.isCompleted = true
-        end
+        @todo.isCompleted = !@todo.isCompleted
         @todo.save
     end
     def create
